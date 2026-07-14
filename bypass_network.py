@@ -13,10 +13,10 @@ APP_DIR = None
 if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
     APP_DIR = sys.argv[1]
 else:
-for candidate in [BASE_DIR,
-                  os.path.join(BASE_DIR, "BumYT"),
-                  os.path.join(BASE_DIR, "..", "BumYT"),
-                  os.path.join(os.getcwd(), "BumYT")]:
+    for candidate in [BASE_DIR,
+                      os.path.join(BASE_DIR, "BumYT"),
+                      os.path.join(BASE_DIR, "..", "BumYT"),
+                      os.path.join(os.getcwd(), "BumYT")]:
         candidate = os.path.abspath(candidate)
         if os.path.isdir(candidate) and os.path.isfile(os.path.join(candidate, "BumYT.exe")):
             APP_DIR = candidate
