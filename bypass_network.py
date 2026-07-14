@@ -7,7 +7,24 @@ No portproxy needed.
 import os, sys, subprocess, time, ssl, json, socket, threading
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-APP_DIR = os.path.join(BASE_DIR, "BumYT")
+
+# Auto-detect BumYT app dir: check cmdline arg, then cwd/BumYT, then parent/BumYT
+APP_DIR = None
+if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+    APP_DIR = sys.argv[1]
+else:
+    for candidate in [os.path.join(BASE_DIR, "BumYT"),
+                      os.path.join(BASE_DIR, "..", "BumYT"),
+                      os.path.join(os.getcwd(), "BumYT")]:
+        candidate = os.path.abspath(candidate)
+        if os.path.isdir(candidate) and os.path.isfile(os.path.join(candidate, "BumYT.exe")):
+            APP_DIR = candidate
+            break
+if not APP_DIR:
+    print("[!] Khong tim thay thu muc BumYT!")
+    print("[!] Truyen duong dan: python bypass_network.py D:\path\to\BumYT")
+    sys.exit(1)
+
 CACERT = os.path.join(APP_DIR, "_internal", "certifi", "cacert.pem")
 CERT_FILE = os.path.join(BASE_DIR, "server_cert.pem")
 KEY_FILE = os.path.join(BASE_DIR, "server_key.pem")
@@ -69,9 +86,12 @@ def setup():
     print("[OK] Admin")
 
     # Check files
+    print(f"[*] App dir: {APP_DIR}")
     for f in [CERT_FILE, KEY_FILE, CA_CERT, CACERT, APP_DIR]:
         if not os.path.exists(f):
             print(f"[!] Thieu: {f}")
+            if f == CACERT:
+                print("[!] Dung: python bypass_network.py D:\path\to\BumYT")
             sys.exit(1)
 
     # Clean up old portproxy from previous runs
