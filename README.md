@@ -1,6 +1,8 @@
 # Bypass-BumYT
 
 Công cụ bypass license key cho ứng dụng BumYT TTS.
+Đây là 1 app kiểu Vietsub hoạt hình điêu khắc cát bên trung link tải: https://drive.google.com/file/d/1hilLFCGVGk2uLMsUeo5K3wCTnJcdLYfU/view 
+Nó nặng lắm nén lại thì 6GB giải nén thầm 14.4GB
 
 ## Cách hoạt động
 
